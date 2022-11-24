@@ -1,0 +1,746 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://assets/button.png" type="Texture" id=1]
+[ext_resource path="res://assets/bg.png" type="Texture" id=2]
+[ext_resource path="res://assets/Boxy-Bold.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://scripts/background.gd" type="Script" id=4]
+[ext_resource path="res://assets/theme.tres" type="Theme" id=5]
+[ext_resource path="res://assets/Player.png" type="Texture" id=6]
+[ext_resource path="res://assets/enemy.png" type="Texture" id=7]
+[ext_resource path="res://scripts/MainScreen.gd" type="Script" id=8]
+[ext_resource path="res://music/menu.ogg" type="AudioStream" id=9]
+
+[sub_resource type="Shader" id=3]
+code = "shader_type canvas_item;
+uniform float scroll_speed;
+void fragment(){
+    vec2 shifteduv = UV;
+    shifteduv .y -= TIME * scroll_speed;
+    vec4 color = texture(TEXTURE, shifteduv);
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 3 )
+shader_param/scroll_speed = null
+
+[sub_resource type="DynamicFont" id=9]
+size = 24
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
+extra_spacing_top = 10
+extra_spacing_char = 6
+font_data = ExtResource( 3 )
+
+[sub_resource type="Theme" id=8]
+default_font = SubResource( 9 )
+
+[sub_resource type="DynamicFont" id=12]
+size = 63
+outline_size = 12
+outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
+extra_spacing_top = 10
+extra_spacing_char = -3
+font_data = ExtResource( 3 )
+
+[sub_resource type="Theme" id=13]
+default_font = SubResource( 12 )
+
+[sub_resource type="Animation" id=10]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("Control/Center:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 512, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("Control/Center:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 240, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("Control/Center:scale:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 2.28125, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath("Control/Center:scale:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 2.28125, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/4/type = "bezier"
+tracks/4/path = NodePath("Control/Center:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/5/type = "bezier"
+tracks/5/path = NodePath("Enemydis:position:x")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"points": PoolRealArray( 105, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/6/type = "bezier"
+tracks/6/path = NodePath("Enemydis:position:y")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"points": PoolRealArray( 86, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/7/type = "bezier"
+tracks/7/path = NodePath("Enemydis:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"points": PoolRealArray( -48.898, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/8/type = "bezier"
+tracks/8/path = NodePath("Enemydis:scale:x")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"points": PoolRealArray( 2.25, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/9/type = "bezier"
+tracks/9/path = NodePath("Enemydis:scale:y")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"points": PoolRealArray( 2.25, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/10/type = "bezier"
+tracks/10/path = NodePath("Enemydis2:position:x")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"points": PoolRealArray( 157, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/11/type = "bezier"
+tracks/11/path = NodePath("Enemydis2:position:y")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"points": PoolRealArray( 373, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/12/type = "bezier"
+tracks/12/path = NodePath("Enemydis2:scale:x")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"points": PoolRealArray( 2.25, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/13/type = "bezier"
+tracks/13/path = NodePath("Enemydis2:scale:y")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"points": PoolRealArray( 2.25, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/14/type = "bezier"
+tracks/14/path = NodePath("Enemydis2:rotation_degrees")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"points": PoolRealArray( -106.116, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/15/type = "bezier"
+tracks/15/path = NodePath("Enemydis3:position:x")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"points": PoolRealArray( 947, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/16/type = "bezier"
+tracks/16/path = NodePath("Enemydis3:position:y")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"points": PoolRealArray( 59, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/17/type = "bezier"
+tracks/17/path = NodePath("Enemydis3:rotation_degrees")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/18/type = "bezier"
+tracks/18/path = NodePath("Enemydis3:scale:x")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/keys = {
+"points": PoolRealArray( 2.25, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/19/type = "bezier"
+tracks/19/path = NodePath("Enemydis3:scale:y")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/keys = {
+"points": PoolRealArray( 2.25, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/20/type = "bezier"
+tracks/20/path = NodePath("Enemydis4:position:x")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/keys = {
+"points": PoolRealArray( 892, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/21/type = "bezier"
+tracks/21/path = NodePath("Enemydis4:position:y")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/keys = {
+"points": PoolRealArray( 343, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/22/type = "bezier"
+tracks/22/path = NodePath("Enemydis4:scale:x")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/keys = {
+"points": PoolRealArray( 2.25, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/23/type = "bezier"
+tracks/23/path = NodePath("Enemydis4:scale:y")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/keys = {
+"points": PoolRealArray( 2.25, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/24/type = "bezier"
+tracks/24/path = NodePath("Title:rect_position:x")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/keys = {
+"points": PoolRealArray( 238.5, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/25/type = "bezier"
+tracks/25/path = NodePath("Title:rect_position:y")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/keys = {
+"points": PoolRealArray( 12, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/26/type = "bezier"
+tracks/26/path = NodePath("Title:rect_rotation")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "loop"
+length = 2.0
+loop = true
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("Control/Center:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 512, -0.25, 0, 0.25, 0, 511, -0.25, 0, 0.25, 0, 512, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5, 0.9 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("Control/Center:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 240, -0.25, 0, 0.25, 0, 266, -0.25, 0, 0.25, 0, 240, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5, 0.9 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("Control/Center:scale:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 2.28125, -0.25, 0, 0.25, 0, 2.7, -0.25, 0, 0.25, 0, 2.28, -0.25, 0, 0.25, 0, 2.7, -0.25, 0, 0.25, 0, 2.28125, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.2, 0.5, 0.7, 0.9 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath("Control/Center:scale:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 2.28125, -0.25, 0, 0.25, 0, 2.7, -0.25, 0, 0.25, 0, 2.28, -0.25, 0, 0.25, 0, 2.7, -0.25, 0, 0.25, 0, 2.28125, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.2, 0.5, 0.7, 0.9 )
+}
+tracks/4/type = "bezier"
+tracks/4/path = NodePath("Control/Center:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 30, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, -30, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.7, 1 )
+}
+tracks/5/type = "bezier"
+tracks/5/path = NodePath("Enemydis:position:x")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"points": PoolRealArray( 105, -0.25, 0, 0.25, 0, 185, -0.25, 0, 0.25, 0, 105, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 1, 2 )
+}
+tracks/6/type = "bezier"
+tracks/6/path = NodePath("Enemydis:position:y")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"points": PoolRealArray( 86, -0.25, 0, 0.25, 0, 156, -0.25, 0, 0.25, 0, 86, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 1, 2 )
+}
+tracks/7/type = "bezier"
+tracks/7/path = NodePath("Enemydis:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"points": PoolRealArray( -48.898, -0.25, 0, 0.25, 0, -68.231, -0.25, 0, 0.25, 0, -48.898, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 1, 2 )
+}
+tracks/8/type = "bezier"
+tracks/8/path = NodePath("Enemydis:scale:x")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"points": PoolRealArray( 2.25, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0, 2.75, -0.25, 0, 0.25, 0, 2.1745, -0.25, 0, 0.25, 0, 2.75, -0.25, 0, 0.25, 0, 2.25, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3, 0.6, 1, 1.4, 2 )
+}
+tracks/9/type = "bezier"
+tracks/9/path = NodePath("Enemydis:scale:y")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"points": PoolRealArray( 2.25, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0, 2.75, -0.25, 0, 0.25, 0, 2.1745, -0.25, 0, 0.25, 0, 2.75, -0.25, 0, 0.25, 0, 2.25, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3, 0.6, 1, 1.4, 2 )
+}
+tracks/10/type = "bezier"
+tracks/10/path = NodePath("Enemydis2:position:x")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"points": PoolRealArray( 283, -0.25, 0, 0.25, 0, 157, -0.25, 0, 0.25, 0, 157, -0.25, 0, 0.25, 0, 250, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 1, 1.4, 2 )
+}
+tracks/11/type = "bezier"
+tracks/11/path = NodePath("Enemydis2:position:y")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"points": PoolRealArray( 331, -0.25, 0, 0.25, 0, 373, -0.25, 0, 0.25, 0, 373, -0.25, 0, 0.25, 0, 361, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 1, 1.4, 2 )
+}
+tracks/12/type = "bezier"
+tracks/12/path = NodePath("Enemydis2:scale:x")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"points": PoolRealArray( 2.5, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0, 2.25, -0.25, 0, 0.25, 0, 2.25, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5, 1, 1.4 )
+}
+tracks/13/type = "bezier"
+tracks/13/path = NodePath("Enemydis2:scale:y")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"points": PoolRealArray( 2.5, -0.25, 0, 0.25, 0, 2.375, -0.25, 0, 0.25, 0, 2.25, -0.25, 0, 0.25, 0, 2.25, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5, 1, 1.4 )
+}
+tracks/14/type = "bezier"
+tracks/14/path = NodePath("Enemydis2:rotation_degrees")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"points": PoolRealArray( -106.116, -0.25, 0, 0.25, 0, -106.116, -0.25, 0, 0.25, 0, -132.005, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 1, 1.4, 2 )
+}
+tracks/15/type = "bezier"
+tracks/15/path = NodePath("Enemydis3:position:x")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"points": PoolRealArray( 947, -0.25, 0, 0.25, 0, 869, -0.25, 0, 0.25, 0, 678, -0.25, 0, 0.25, 0, 947, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.7, 1.4, 2 )
+}
+tracks/16/type = "bezier"
+tracks/16/path = NodePath("Enemydis3:position:y")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"points": PoolRealArray( 59, -0.25, 0, 0.25, 0, 178, -0.25, 0, 0.25, 0, 153, -0.25, 0, 0.25, 0, 59, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.7, 1.4, 2 )
+}
+tracks/17/type = "bezier"
+tracks/17/path = NodePath("Enemydis3:rotation_degrees")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/keys = {
+"points": PoolRealArray( 54.5795, -0.25, 0, 0.25, 0, 72.6, -0.25, 0, 0.25, 0, 54.5795, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 1.2, 2 )
+}
+tracks/18/type = "bezier"
+tracks/18/path = NodePath("Enemydis3:scale:x")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/keys = {
+"points": PoolRealArray( 2.25, -0.25, 0, 0.25, 0, 1.739, -0.25, 0, 0.25, 0, 1.739, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 1.2, 1.6 )
+}
+tracks/19/type = "bezier"
+tracks/19/path = NodePath("Enemydis3:scale:y")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/keys = {
+"points": PoolRealArray( 2.25, -0.25, 0, 0.25, 0, 2.25, -0.25, 0, 0.25, 0, 2.25, -0.25, 0, 0.25, 0, 2.509, -0.25, 0, 0.25, 0, 2.25, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.7, 1.2, 1.6, 2 )
+}
+tracks/20/type = "bezier"
+tracks/20/path = NodePath("Enemydis4:position:x")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/keys = {
+"points": PoolRealArray( 892, -0.25, 0, 0.25, 0, 689, -0.25, 0, 0.25, 0, 892, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5, 2 )
+}
+tracks/21/type = "bezier"
+tracks/21/path = NodePath("Enemydis4:position:y")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/keys = {
+"points": PoolRealArray( 343, -0.25, 0, 0.25, 0, 322, -0.25, 0, 0.25, 0, 343, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5, 2 )
+}
+tracks/22/type = "bezier"
+tracks/22/path = NodePath("Enemydis4:scale:x")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/keys = {
+"points": PoolRealArray( 2.25, -0.25, 0, 0.25, 0, 1.8, -0.25, 0, 0.25, 0, 2.6, -0.25, 0, 0.25, 0, 2.25, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.2, 0.8, 2 )
+}
+tracks/23/type = "bezier"
+tracks/23/path = NodePath("Enemydis4:scale:y")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/keys = {
+"points": PoolRealArray( 2.25, -0.25, 0, 0.25, 0, 2.6, -0.25, 0, 0.25, 0, 1.8, -0.25, 0, 0.25, 0, 2.25, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.2, 0.8, 2 )
+}
+tracks/24/type = "bezier"
+tracks/24/path = NodePath("Title:rect_position:x")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/keys = {
+"points": PoolRealArray( 238.5, -0.25, 0, 0.25, 0, 238.5, -0.25, 0, 0.25, 0, 238.5, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 1, 2 )
+}
+tracks/25/type = "bezier"
+tracks/25/path = NodePath("Title:rect_position:y")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/keys = {
+"points": PoolRealArray( 12, -0.25, 0, 0.25, 0, 29, -0.25, 0, 0.25, 0, 12, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 1, 2 )
+}
+tracks/26/type = "bezier"
+tracks/26/path = NodePath("Title:rect_rotation")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0, -2, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.4, 1.4, 2 )
+}
+
+[node name="MainScreen" type="Node2D"]
+script = ExtResource( 8 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource( 4 )
+margin_top = -80.0
+margin_right = 1200.0
+margin_bottom = 720.0
+rect_scale = Vector2( 0.88, 0.862164 )
+texture = ExtResource( 2 )
+stretch_mode = 2
+script = ExtResource( 4 )
+
+[node name="Control" type="Control" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="TextureButton" type="TextureButton" parent="Control"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -80.0
+margin_top = -104.0
+margin_right = 72.0
+margin_bottom = -51.0
+theme = ExtResource( 5 )
+texture_normal = ExtResource( 1 )
+expand = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/TextureButton"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -65.0
+margin_top = -23.5
+margin_right = 70.0
+margin_bottom = 23.5
+theme = SubResource( 8 )
+text = " PLAY"
+
+[node name="Center" type="Sprite" parent="Control"]
+position = Vector2( 512, 240 )
+scale = Vector2( 2.28125, 2.28125 )
+texture = ExtResource( 6 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Control/Center"]
+position = Vector2( -8, 27.6165 )
+rotation = 1.5708
+amount = 20
+lifetime = 0.3
+preprocess = 0.32
+speed_scale = 0.8
+randomness = 0.58
+lifetime_randomness = 0.39
+gravity = Vector2( 0, 0 )
+initial_velocity = 128.44
+angular_velocity = -92.48
+linear_accel = 14.68
+tangential_accel = -14.68
+tangential_accel_random = 1.0
+angle_random = 0.42
+scale_amount = 3.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="CPUParticles2D3" type="CPUParticles2D" parent="Control/Center"]
+position = Vector2( 0, 27.6165 )
+rotation = 1.5708
+amount = 50
+lifetime = 0.3
+preprocess = 0.32
+speed_scale = 0.8
+randomness = 0.58
+lifetime_randomness = 0.39
+gravity = Vector2( 0, 0 )
+initial_velocity = 128.44
+angular_velocity = -92.48
+linear_accel = 14.68
+tangential_accel = -14.68
+tangential_accel_random = 1.0
+angle_random = 0.42
+scale_amount = 2.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="Control/Center"]
+position = Vector2( 8, 27.6164 )
+rotation = 1.5708
+amount = 20
+lifetime = 0.3
+preprocess = 0.32
+speed_scale = 0.8
+randomness = 0.58
+lifetime_randomness = 0.39
+gravity = Vector2( 0, 0 )
+initial_velocity = 128.44
+angular_velocity = -92.48
+linear_accel = 14.68
+tangential_accel = -14.68
+tangential_accel_random = 1.0
+angle_random = 0.42
+scale_amount = 3.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="Enemydis" type="Sprite" parent="."]
+position = Vector2( 105, 86 )
+rotation = -0.853431
+scale = Vector2( 2.25, 2.25 )
+texture = ExtResource( 7 )
+
+[node name="Enemydis2" type="Sprite" parent="."]
+position = Vector2( 157, 373 )
+rotation = -1.85207
+scale = Vector2( 2.25, 2.25 )
+texture = ExtResource( 7 )
+
+[node name="Enemydis3" type="Sprite" parent="."]
+position = Vector2( 947, 59 )
+scale = Vector2( 2.25, 2.25 )
+texture = ExtResource( 7 )
+
+[node name="Enemydis4" type="Sprite" parent="."]
+position = Vector2( 892, 343 )
+rotation = -1.30203
+scale = Vector2( 2.25, 2.25 )
+texture = ExtResource( 7 )
+
+[node name="Title" type="RichTextLabel" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 238.5
+margin_top = 12.0
+margin_right = 785.5
+margin_bottom = 111.0
+rect_pivot_offset = Vector2( 268.5, 44 )
+theme = SubResource( 13 )
+text = " NO  OFFENSE"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "loop"
+anims/RESET = SubResource( 10 )
+anims/loop = SubResource( 11 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = -9.0
+autoplay = true
+mix_target = 2
